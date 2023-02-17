@@ -19,16 +19,16 @@ public class RobotMap {
     public static final int SWERVE_RIGHTREAR_ANGLEMOTOR = 6;
     public static final int SWERVE_RIGHTREAR_CANCODER = 3;
 
-    public static final int LADDER_LOWER_LEFT_MOTOR = 7;
-    public static final int LADDER_LOWER_RIGHT_MOTOR = 8;
-    public static final int LADDER_UPPER_LEFT_MOTOR = 9;
-    public static final int LADDER_UPPER_RIGHT_MOTOR = 10;
+    public static final int LADDER_LOWER_LEFT_MOTOR = 1;
+    public static final int LADDER_LOWER_RIGHT_MOTOR = 2;
+    public static final int LADDER_UPPER_LEFT_MOTOR = 3;
+    public static final int LADDER_UPPER_RIGHT_MOTOR = 4;
 
-    public static final int INTAKE_ANGLE_L = 11;
-    public static final int INTAKE_ANGLE_R = 12;
+    public static final int INTAKE_ANGLE_L = 5;
+    public static final int INTAKE_ANGLE_R = 6;
     public static final int INTAKE_ANGLE_ENCODER_L = 1;
     public static final int INTAKE_ANGLE_ENCODER_R = 2;
-    public static final int INTAKE_MOTOR = 13;
+    public static final int INTAKE_MOTOR = 7;
 
-    public static final int SHOOTER_MOTOR = 14;
+    public static final int SHOOTER_MOTOR = 8;
 }

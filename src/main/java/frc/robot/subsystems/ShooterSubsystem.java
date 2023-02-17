@@ -30,7 +30,7 @@ public class ShooterSubsystem extends SubsystemBase
         shoot_Motor.burnFlash();
     }
 
-    private void setShooterSpeed(double RPM){
+    public void setShooterSpeed(double RPM){
         shoot_Motor.getPIDController().setReference(RPM, CANSparkMax.ControlType.kVelocity);
     }
     @Override

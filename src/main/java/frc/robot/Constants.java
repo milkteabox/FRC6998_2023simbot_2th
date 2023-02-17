@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import frc.robot.subsystems.LadderSubsystem;
 
 public final class Constants
 {
@@ -50,9 +51,9 @@ public final class Constants
     public static final double SWERVE_DRIVE_MOTOR_CLOSELOOPRAMP = 0.0;
     public static final NeutralMode DRIVE_NEUTRAL_MODE = NeutralMode.Brake;
 
-    public static final double SWERVE_DRIVE_KS = (0.32 / MAX_VOTAGE);//Wait to test by SYSID.
-    public static final double SWERVE_DRIVE_KV = (1.51 / MAX_VOTAGE);
-    public static final double SWERVE_DRIVE_KA = (0.27 / MAX_VOTAGE);
+    public static final double SWERVE_DRIVE_KS = (0.077618 / MAX_VOTAGE);//Wait to test by SYSID.
+    public static final double SWERVE_DRIVE_KV = (0.89851 / MAX_VOTAGE);
+    public static final double SWERVE_DRIVE_KA = (0.18239 / MAX_VOTAGE);
 
     /* These values are used by the drive falcon to ramp in open loop and closed loop driving.
      * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc */
@@ -76,18 +77,19 @@ public final class Constants
     public static final double SWERVE_AUTO_Z_KI = 0.0;
     public static final double SWERVE_AUTO_Z_KD = 0.0;
 
-    public static final double SECOND_FLOOR_Length = 10;
-    public static final double THIRD_FLOOR_Length = 10;
+    public static final double SECOND_FLOOR_Length = 80;
+    public static final double THIRD_FLOOR_Length = 70;
 
     public static final boolean LADDER_LOWERLEFT_INVERTED = false;
     public static final boolean LADDER_LOWERRIGHT_INVERTED = false;
     public static final int LADDER_LOWER_CURRENTLIMIT = 35;
-    public static final double LADDER_LOWER_KP = 0.0;
+    public static final double LADDER_LOWER_KP = 0.045;
     public static final double LADDER_LOWER_KI = 0.0;
     public static final double LADDER_LOWER_KD = 0.0;
-    public static final double LADDER_LOWER_KF = 0.0;
+    public static final double LADDER_LOWER_KF = 0.00002380952355451882;
 
-    public static final float LADDER_LOWER_LIMIT = 100;
+    public static final float LADDER_LOWER_LIMIT = 220;
+
 
 
     public static final boolean LADDER_UPPERLEFT_INVERTED = false;
@@ -98,21 +100,24 @@ public final class Constants
     public static final double LADDER_UPPER_KD = 0.0;
     public static final double LADDER_UPPER_KF = 0.0;
 
-    public static final float LADDER_UPPER_LIMIT = 100;
+    public static final float LADDER_UPPER_LIMIT = 30;
+
 
     public static final boolean INTAKE_INVERTED = false;
     public static final int INTAKE_CURRENTLIMIT = 35;
-    public static final double INTAKE_KP = 0.0;
+    public static final double INTAKE_KP = 0.000005;
     public static final double INTAKE_KI = 0.0;
     public static final double INTAKE_KD = 0.0;
-    public static final double INTAKE_KF = 0.0;
+    public static final double INTAKE_KF = 0.00018072289822157472;
+
+    public static final double IntakeRPM = 5800;
 
     public static final boolean SHOOTER_INVERTED = false;
     public static final int SHOOTER_CURRENTLIMIT = 35;
-    public static final double SHOOTER_KP = 0.0;
+    public static final double SHOOTER_KP = 0.000175;
     public static final double SHOOTER_KI = 0.0;
     public static final double SHOOTER_KD = 0.0;
-    public static final double SHOOTER_KF = 0.0;
+    public static final double SHOOTER_KF = 0.0001875;
 
     public static final double SHOOT_FIRST_RPM = 1000;
     public static final double SHOOT_INTAKE_FIRST_RPM = 1000;
@@ -126,10 +131,12 @@ public final class Constants
     public static final boolean INTAKE_ANGLE_L_INVERTED = false;
     public static final boolean INTAKE_ANGLE_R_INVERTED = false;
     public static final int INTAKE_ANGLE_CURRENTLIMIT = 35;
-    public static final float INTAKE_ANGLE_UP_LIMIT = 0;
-    public static final float INTAKE_ANGLE_DOWN_LIMIT = 0;
-    public static final double INTAKE_ANGLE_KP = 0.0;
+    public static final float INTAKE_ANGLE_UP_LIMIT = 87;
+    public static final float INTAKE_ANGLE_DOWN_LIMIT = -20;
+    public static final double INTAKE_ANGLE_KP = 0.05;
     public static final double INTAKE_ANGLE_KI = 0.0;
     public static final double INTAKE_ANGLE_KD = 0.0;
-    public static final double INTAKE_ANGLE_KF = 0.0;
+    public static final double INTAKE_ANGLE_KF = 0.000376;
+
+    public static final double INTAKE_UP_ANGLE = 0;
 }

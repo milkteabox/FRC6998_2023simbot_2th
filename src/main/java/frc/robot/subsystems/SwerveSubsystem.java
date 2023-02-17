@@ -42,7 +42,7 @@ public class SwerveSubsystem extends SubsystemBase {
                         SWERVE_RIGHTREAR_DRIVEMOTOR,SWERVE_RIGHTREAR_ANGLEMOTOR,SWERVE_RIGHTREAR_CANCODER,
                         SWERVE_RIGHTREAR_OFFSET)
         };
-        Timer.delay(1.0);
+        Timer.delay(0.5);
         resetModulesToAbsolute();
 
         swerveDriveOdometry = new SwerveDriveOdometry(swerveDriveKinematics, getYaw(), getModulePositions());

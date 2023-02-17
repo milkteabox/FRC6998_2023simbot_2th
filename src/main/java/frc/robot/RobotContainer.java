@@ -11,10 +11,17 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.SwerveDriveCommand;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LadderSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
 import java.util.HashMap;
@@ -28,9 +35,19 @@ public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
     private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+    private final LadderSubsystem ladderSubsystem = new LadderSubsystem();
+    private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+    private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+
+    private final SendableChooser<String> pathChooser = new SendableChooser<>();
 
     private final static XboxController controller_driveX = new XboxController(0);
     //    private final static Joystick controller_driveF = new Joystick(0);
+
+//    private int ladderFloor = 1;
+    private double ladderLength = 5;
+    private double intakeAngle = 60;
+//    private double ladder_erorFix =0;
 
 
 
@@ -46,19 +63,69 @@ public class RobotContainer
         ));
         // Configure the trigger bindings
         configureBindings();
+
+        pathChooser.setDefaultOption("Auto 1", "AUTO_1");
+        pathChooser.addOption("Auto 2", "AUTO_2");
+        pathChooser.addOption("Auto 3", "AUTO_3");
+        SmartDashboard.putData("Auto choices", pathChooser);
     }
 
 
     private void configureBindings()
     {
-        new JoystickButton(controller_driveX,XboxController.Button.kRightBumper.value)
-                .whenPressed(new InstantCommand(swerveSubsystem::zeroGyro));
+        new JoystickButton(controller_driveX, XboxController.Button.kB.value)
+                .onTrue(new InstantCommand(swerveSubsystem::zeroGyro));
+
+
+
+        new JoystickButton(controller_driveX, XboxController.Button.kRightBumper.value)
+                .whileTrue(new IntakeCommand(intakeSubsystem, true, false))
+                .whileFalse(new IntakeCommand(intakeSubsystem, false, false));
+
+        new JoystickButton(controller_driveX, XboxController.Button.kLeftBumper.value)
+                .whileTrue(new IntakeCommand(intakeSubsystem, false, true))
+                .whileFalse(new IntakeCommand(intakeSubsystem, false, false));
+
+        new JoystickButton(controller_driveX, XboxController.Button.kX.value)
+                .whileTrue(new InstantCommand(() -> intakeSubsystem.intakeUP(true)))
+                .whileFalse(new InstantCommand(() -> intakeSubsystem.intakeUP(false)));
+
+        new JoystickButton(controller_driveX, XboxController.Button.kX.value)
+                .whileTrue(new InstantCommand(() -> shooterSubsystem.setShooterSpeed(5000)));
+
+        if(ladderLength<=LADDER_LOWER_LIMIT-5){
+            new POVButton(controller_driveX, 0)
+                    .onTrue(new InstantCommand(() -> ladderLength+=10));
+        }
+        if(ladderLength>=5){
+            new POVButton(controller_driveX, 180)
+                    .onTrue(new InstantCommand(() -> ladderLength-=10));
+        }
+        if(intakeAngle<=INTAKE_ANGLE_UP_LIMIT-1){
+            new JoystickButton(controller_driveX, XboxController.Button.kA.value)
+                    .onTrue(new InstantCommand(() -> intakeAngle++));
+        }
+        if(intakeAngle>=INTAKE_ANGLE_DOWN_LIMIT){
+            new JoystickButton(controller_driveX, XboxController.Button.kB.value)
+                    .onTrue(new InstantCommand(() -> intakeAngle-=1));
+        }
+    }
+    public void teleopPeriodic(){
+//        if(ladderFloor==2){
+//            ladderLength=SECOND_FLOOR_Length;
+//        }else if(ladderFloor==3){
+//            ladderLength=THIRD_FLOOR_Length;
+//        }else{
+//            ladderLength=0;
+//        };
+        //ladderSubsystem.setLadder(ladderLength);
+
     }
 
     public Command getAutonomousCommand()
     {
         List<PathPlannerTrajectory> pathGroup =
-                PathPlanner.loadPathGroup("New Path", new PathConstraints(4, 3));
+                PathPlanner.loadPathGroup(pathChooser.getSelected(), new PathConstraints(4, 3));
         // This is just an example event map. It would be better to have a constant, global event map
         // in your code that will be used by all path following commands
         HashMap<String, Command> eventMap = new HashMap<>();
